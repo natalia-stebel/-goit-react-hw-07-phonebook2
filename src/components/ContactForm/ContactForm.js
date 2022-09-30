@@ -2,42 +2,52 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addContact } from './../../contactStorage/contactsSlice';
 import css from './ContactForm.module.css';
+import { getContacts } from './../../contactStorage/store';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { nanoid } from 'nanoid';
 
-export const ContactForm = () => {
-  const [form, setForm] = useState({ name: '', number: '' });
-
+export default function ContactForm() {
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
   const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contacts.items);
+  const contactsItems = useSelector(getContacts);
 
   const handleInputChange = e => {
     const { name, value } = e.currentTarget;
-    setForm(contacts => ({ ...contacts, [name]: value }));
+
+    switch (name) {
+      case 'name':
+        setName(value);
+        break;
+      case 'number':
+        setNumber(value);
+        break;
+      default:
+        return;
+    }
   };
 
   const handleSubmit = event => {
     event.preventDefault();
-    const data = { id: nanoid(), ...form };
+
     if (
-      contacts.find(
-        contact => contact.name.toLowerCase() === data.name.toLowerCase()
+      contactsItems.some(
+        contact => contact.name.toLowerCase() === name.toLowerCase()
       )
     ) {
-      reset();
-      return toast.error(`${data.name} is already in your list`);
+      return toast.error(`${name} is already in your list`);
     }
 
-    dispatch(addContact(data));
+    dispatch(addContact({ name, number }));
 
     reset();
   };
 
   const reset = () => {
-    setForm({ name: '', number: '' });
+    setName('');
+    setNumber('');
   };
-  const { name, number } = form;
+
   return (
     <div className={css.contactForm}>
       <form action="submit" onSubmit={handleSubmit}>
@@ -75,4 +85,4 @@ export const ContactForm = () => {
       <ToastContainer autoClose={2000} />
     </div>
   );
-};
+}

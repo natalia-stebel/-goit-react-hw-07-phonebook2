@@ -25,4 +25,7 @@ export const store = configureStore({
   devTools: process.env.NODE_ENV === 'development',
 });
 
+export const getValue = state => state.contacts.filter;
+export const getContacts = state => state.contacts.items;
+
 export const persistor = persistStore(store);
