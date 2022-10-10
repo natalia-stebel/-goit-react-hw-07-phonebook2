@@ -4,6 +4,8 @@ import css from './ContactList.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteContact } from '../../contactStorage/contactsSlice';
 import { getValue, getContacts } from '../../contactStorage/store';
+import { useEffect } from 'react';
+import { fetchContacts } from '../../contactStorage/contactsoperations';
 
 export const ContactList = () => {
   const items = useSelector(getContacts);
@@ -13,6 +15,9 @@ export const ContactList = () => {
     contact.name.toLowerCase().includes(toLower)
   );
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   return (
     <>
