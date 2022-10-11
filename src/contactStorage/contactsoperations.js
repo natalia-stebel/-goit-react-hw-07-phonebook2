@@ -15,10 +15,10 @@ export const fetchContacts = createAsyncThunk(
 
 export const addContacts = createAsyncThunk(
   'contacts/addContacts',
-  async (contact, { rejectWithValue }) => {
+  async ({ name, number }, { rejectWithValue }) => {
     try {
-      const { data } = await addItems(contact);
-      return data;
+      const response = await addItems(name, number);
+      return response.data;
     } catch (error) {
       return rejectWithValue(error);
     }

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { ContactItem } from 'components/ContactList/ContactItem';
 import css from './ContactList.module.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { deleteContact } from '../../contactStorage/contactsSlice';
+import { deleteContacts } from '../../contactStorage/contactsoperations';
 import { getValue, getContacts } from '../../contactStorage/store';
 import { useEffect } from 'react';
 import { fetchContacts } from '../../contactStorage/contactsoperations';
@@ -29,7 +29,7 @@ export const ContactList = () => {
                 key={id}
                 name={name}
                 number={number}
-                onDeleteClick={() => dispatch(deleteContact(id))}
+                onDeleteClick={() => dispatch(deleteContacts(id))}
               />
             );
           })}

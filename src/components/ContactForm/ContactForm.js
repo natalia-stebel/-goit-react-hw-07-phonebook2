@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addContact } from './../../contactStorage/contactsSlice';
+import { addContacts } from './../../contactStorage/contactsoperations';
 import css from './ContactForm.module.css';
 import { getContacts } from './../../contactStorage/store';
 import { ToastContainer, toast } from 'react-toastify';
@@ -38,7 +38,7 @@ export default function ContactForm() {
       return toast.error(`${name} is already in your list`);
     }
 
-    dispatch(addContact({ name, number }));
+    dispatch(addContacts({ name, number }));
 
     reset();
   };
