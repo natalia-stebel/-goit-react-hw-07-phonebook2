@@ -6,8 +6,8 @@ export async function getItems() {
   return await axios.get(`${BASE_URL}contacts/`);
 }
 
-export async function addItems() {
-  return await axios.post(`${BASE_URL}/contacts`);
+export async function addItems(item) {
+  return await axios.post(`${BASE_URL}contacts`, item);
 }
 
 export async function deleteItems(id) {
